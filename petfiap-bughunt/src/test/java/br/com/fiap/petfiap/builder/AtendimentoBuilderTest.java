@@ -51,4 +51,19 @@ public class AtendimentoBuilderTest {
                 .comDataHora(data)
                 .construir(9));
     }
+
+    @Test
+    public void deveGarantirQueBuilderConstroiComSucessoDadosValidos() {
+        Atendimento atendimento = new AtendimentoBuilder()
+                .comTipo("CONSULTA")
+                .comPet("Mimi", "MEDIO")
+                .comTutor("Bruno")
+                .comDataHora(LocalDateTime.now().plusDays(2))
+                .construir(20);
+
+        assertEquals("CONSULTA", atendimento.getTipo());
+        assertEquals("Mimi", atendimento.getPetNome());
+        assertEquals("MEDIO", atendimento.getPetPorte());
+        assertEquals("Bruno", atendimento.getTutorNome());
+    }
 }
