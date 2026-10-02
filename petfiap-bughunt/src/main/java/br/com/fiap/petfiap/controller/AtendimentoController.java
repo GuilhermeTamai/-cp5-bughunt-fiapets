@@ -33,6 +33,10 @@ public class AtendimentoController {
             @RequestParam String tutorNome,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora) {
         try {
+            if (dataHora.isBefore(LocalDateTime.now())) {
+                throw new IllegalArgumentException("Nao e possivel agendar em data/hora passada");
+            }
+
             int protocolo = GeradorProtocolo.getInstancia().proximo();
             Atendimento atendimento = new AtendimentoBuilder()
                     .comTipo(tipo)
@@ -102,12 +106,6 @@ public class AtendimentoController {
             return ResponseEntity.status(409).build();
         }
     }
-
-    // -----------------------------------------------------------------
-    // Fidelidade (futuro) - implementar quando o time aprovar:
-    // - desconto de 10% para tutores com mais de 500 pontos
-    // - dobro de pontos em novembro amarelo (castracao)
-    private double calcularDescontoFidelidade(int pontos) {
-        return pontos * 0.1;
-    }
+    
+    // CLEAN CODE 02: O metodo morto calcularDescontoFidelidade foi completamente removido
 }
