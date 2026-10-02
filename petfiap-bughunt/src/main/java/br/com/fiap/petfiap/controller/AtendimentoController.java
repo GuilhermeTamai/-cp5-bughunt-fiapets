@@ -33,7 +33,6 @@ public class AtendimentoController {
             @RequestParam String tutorNome,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora) {
         try {
-
             int protocolo = GeradorProtocolo.getInstancia().proximo();
             Atendimento atendimento = new AtendimentoBuilder()
                     .comTipo(tipo)
@@ -103,6 +102,4 @@ public class AtendimentoController {
             return ResponseEntity.status(409).build();
         }
     }
-    
-    // CLEAN CODE 02: O metodo morto calcularDescontoFidelidade foi completamente removido
 }

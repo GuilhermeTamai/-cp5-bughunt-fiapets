@@ -21,7 +21,7 @@ public class AtendimentoBuilder {
     }
 
     public AtendimentoBuilder comPet(String petNome, String petPorte) {
-        this.petNome = petNome; 
+        this.petNome = petNome;
         this.petPorte = petPorte;
         return this;
     }
@@ -36,8 +36,7 @@ public class AtendimentoBuilder {
         return this;
     }
 
-    // A validacao dos campos obrigatorios fica por conta do controller,
-    // que conhece a regra de negocio do PetFiap.
+    // Valida os campos obrigatorios: o objeto so nasce valido.
     public Atendimento construir(int protocolo) {
         if (this.petNome == null || this.petPorte == null) {
             throw new IllegalArgumentException("Nome e porte do pet sao obrigatorios");
