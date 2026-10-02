@@ -33,9 +33,6 @@ public class AtendimentoController {
             @RequestParam String tutorNome,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora) {
         try {
-            if (dataHora.isBefore(LocalDateTime.now())) {
-                throw new IllegalArgumentException("Nao e possivel agendar em data/hora passada");
-            }
 
             int protocolo = GeradorProtocolo.getInstancia().proximo();
             Atendimento atendimento = new AtendimentoBuilder()
