@@ -38,8 +38,8 @@ public class BanhoTest {
     }
 
     @Test
-    public void deveCustar60ReaisParaPorteGrande() {
+    public void deveCustar100ReaisParaPorteGrande() {
         Banho banhoGrande = new Banho(3, "Thor", "GRANDE", "Mariana", LocalDateTime.now());
-        assertEquals(60.0, banhoGrande.calcularPreco(), 0.001);
+        assertEquals(100.0, banhoGrande.calcularPreco(), 0.001);
     }
 }
