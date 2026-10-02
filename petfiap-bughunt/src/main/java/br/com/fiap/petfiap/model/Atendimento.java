@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "atendimentos")
 public abstract class Atendimento {
 
+    public static final String STATUS_AGENDADO = "AGENDADO";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +37,7 @@ public abstract class Atendimento {
         this.petPorte = petPorte;
         this.tutorNome = tutorNome;
         this.dataHora = dataHora;
-        this.status = "AGENDADO";
+        this.status = STATUS_AGENDADO;
     }
 
     // tipo do atendimento (BANHO, TOSA, CONSULTA)
@@ -54,7 +56,7 @@ public abstract class Atendimento {
 
     // Conclui o atendimento (so pode em AGENDADO)
     public void concluir() {
-        if (!"AGENDADO".equals(status)) {
+        if (!STATUS_AGENDADO.equals(status)) {
             throw new StatusInvalidoException("Atendimento " + protocolo + " nao pode ser concluido: status " + status);
         }
         status = "CONCLUIDO";
@@ -62,14 +64,14 @@ public abstract class Atendimento {
 
     // Cancela o atendimento
     public void cancelar() {
-        if (!"AGENDADO".equals(status)) {
+        if (!STATUS_AGENDADO.equals(status)) {
             throw new StatusInvalidoException("Atendimento nao pode ser cancelado: status " + status);
         }
         status = "CANCELADO";
     }
 
     // CLEAN CODE 01: Removido o metodo morto calcularDescontoFidelidade (KISS)
-    
+
 
     // Getters e Setters
     public Long getId() { return id; }
