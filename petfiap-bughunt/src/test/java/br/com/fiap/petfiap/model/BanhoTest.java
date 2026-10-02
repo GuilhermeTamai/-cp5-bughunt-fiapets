@@ -30,4 +30,16 @@ public class BanhoTest {
         // Assert
         assertEquals(45, duracao);
     }
+
+    @Test
+    public void deveCustar80ReaisParaPorteMedio() {
+        Banho banhoMedio = new Banho(2, "Bob", "MEDIO", "Carlos", LocalDateTime.now());
+        assertEquals(80.0, banhoMedio.calcularPreco(), 0.001);
+    }
+
+    @Test
+    public void deveCustar60ReaisParaPorteGrande() {
+        Banho banhoGrande = new Banho(3, "Thor", "GRANDE", "Mariana", LocalDateTime.now());
+        assertEquals(60.0, banhoGrande.calcularPreco(), 0.001);
+    }
 }
