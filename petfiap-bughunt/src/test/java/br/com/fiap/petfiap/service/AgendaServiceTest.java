@@ -110,6 +110,7 @@ public class AgendaServiceTest {
         // Act + Assert
         assertThrows(AtendimentoNaoEncontradoException.class, () -> service.buscarPorId(99L));
     }
+
     @Test
     public void deveCancelarAtendimentoAgendado() {
         // Arrange
@@ -137,5 +138,20 @@ public class AgendaServiceTest {
 
         // Nao deve salvar nada
         verify(repository, never()).save(any());
+    }
+
+    @Test
+    public void deveBuscarAtendimentosPorNomeDoPet() {
+        // Arrange
+        Banho banho = banhoDoRexAmanha10h();
+        when(repository.findByPetNome("Rex")).thenReturn(List.of(banho));
+
+        // Act
+        List<Atendimento> resultados = service.buscarPorPet("Rex");
+
+        // Assert
+        assertEquals(1, resultados.size());
+        assertEquals("Rex", resultados.get(0).getPetNome());
+        verify(repository).findByPetNome("Rex");
     }
 }
