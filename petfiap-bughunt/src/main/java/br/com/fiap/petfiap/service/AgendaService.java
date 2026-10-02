@@ -1,8 +1,10 @@
 package br.com.fiap.petfiap.service;
 
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +17,16 @@ import br.com.fiap.petfiap.repository.AtendimentoRepository;
 @Service
 public class AgendaService {
 
+    private static final Logger log = LoggerFactory.getLogger(AgendaService.class);
+
     @Autowired
     private AtendimentoRepository repository;
 
-    // Agenda um novo atendimento: recusa horario ja ocupado pelo mesmo pet.
+    // Agenda um novo atendimento: recusa data passada e horario ja ocupado pelo mesmo pet.
     public Atendimento agendar(Atendimento novo) {
-    	if (novo.getDataHora().isBefore(LocalDateTime.now())) {
-    	    throw new IllegalArgumentException("Nao e possivel agendar em data/hora passada");
-    	}
+        if (novo.getDataHora().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Nao e possivel agendar em data/hora passada");
+        }
         List<Atendimento> doPet = repository.findByPetNome(novo.getPetNome());
         for (Atendimento a : doPet) {
             if (a.getPetNome().equals(novo.getPetNome()) && a.getDataHora().equals(novo.getDataHora())
@@ -32,8 +36,8 @@ public class AgendaService {
             }
         }
         Atendimento salvo = repository.save(novo);
-        System.out.println("Recibo: atendimento " + salvo.getProtocolo()
-                + " agendado para " + salvo.getPetNome() + " (tutor " + salvo.getTutorNome() + ")");
+        log.info("Recibo: atendimento {} agendado para {} (tutor {})",
+                salvo.getProtocolo(), salvo.getPetNome(), salvo.getTutorNome());
         return salvo;
     }
 
