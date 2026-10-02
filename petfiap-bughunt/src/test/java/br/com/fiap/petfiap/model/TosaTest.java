@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// Testes unitarios do model: sem banco, sem Spring (Aula 15).
+// Testes unitarios do model Tosa (Aula 15)
 public class TosaTest {
 
     private Tosa tosaDoRex() {
@@ -29,5 +29,17 @@ public class TosaTest {
 
         // Assert
         assertEquals(70.0, preco, 0.001);
+    }
+
+    @Test
+    public void deveCustar90ReaisParaPorteMedio() {
+        Tosa tosaMedia = new Tosa(2, "Bob", "MEDIO", "Carlos", LocalDateTime.now());
+        assertEquals(90.0, tosaMedia.calcularPreco(), 0.001);
+    }
+
+    @Test
+    public void deveCustar120ReaisParaPorteGrande() {
+        Tosa tosaGrande = new Tosa(3, "Thor", "GRANDE", "Mariana", LocalDateTime.now());
+        assertEquals(120.0, tosaGrande.calcularPreco(), 0.001);
     }
 }
