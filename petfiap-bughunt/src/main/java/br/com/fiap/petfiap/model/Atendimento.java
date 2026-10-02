@@ -61,8 +61,13 @@ public abstract class Atendimento {
 
     // Cancela o atendimento
     public void cancelar() {
+        if (!"AGENDADO".equals(status)) {
+            throw new StatusInvalidoException("Atendimento nao pode ser cancelado: status " + status);
+        }
         status = "CANCELADO";
     }
+
+    // CLEAN CODE 01: Removido o metodo morto calcularDescontoFidelidade (KISS)
 
     // Getters e Setters
     public Long getId() { return id; }
